@@ -10,7 +10,6 @@ class DiamondRingException(Exception):
 class Bird():
 
     def sing(self):
-
         if random.randint(1, 2) == 1:
             raise DiamondRingException()
         else:

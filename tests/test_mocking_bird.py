@@ -6,18 +6,17 @@ try:
 except ImportError:
     from unittest.mock import patch
 
-# What's missing:
-#     The first test passes sometimes, other times it fails. The second
-#     test has the same problem!  Make is so that both tests ALWAYS pass.
-
+# Using patch I am able to hijack the call to randint and return an expected value
+# Patch specifically works like this: patch('package.module.ClassName') which is 
+# why below I patch mocking.bird.random
 
 class TestMockingBird(TestCase):
 
-    # TODO patch here
-    def test_mocking_bird_when_sing_then_get_song(self):
+    @patch('mocking.bird.random')
+    def test_mocking_bird_when_sing_then_get_song(self, mock_random):
         # Arrange
         bird = Bird()
-        # TODO set patch object's return value(s)
+        mock_random.randint.return_value = 2
 
         # Act
         result = bird.sing()
@@ -25,11 +24,11 @@ class TestMockingBird(TestCase):
         # Assert
         assert result == "chirp chirp"
 
-    # TODO patch here
-    def test_mocking_bird_when_dont_sing_then_get_diamond_ring_exception(self):
+    @patch('mocking.bird.random')
+    def test_mocking_bird_when_dont_sing_then_get_diamond_ring_exception(self, mock_random):
         # Arrange
         bird = Bird()
-        # TODO set patch object's return value(s)
+        mock_random.randint.return_value = 1
 
         # Act
         # Assert
